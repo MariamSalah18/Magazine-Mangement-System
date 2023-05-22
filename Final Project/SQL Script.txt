@@ -1,0 +1,316 @@
+create table Publisher (
+publisher_ID NUMBER(2) ,
+FirstName VARCHAR2(25) NOT NULL  ,
+MiddleName VARCHAR2(25) NOT NULL,
+LastName VARCHAR2(25) NOT NULL,
+Email VARCHAR2(40) ,
+Phone NUMBER(11) ,
+CONSTRAINT publisher_id_pk PRIMARY key (publisher_ID) ,
+CONSTRAINT publisher_email_uq UNIQUE(Email) ,
+CONSTRAINT publisher_Phone_uq UNIQUE(Phone)
+);
+
+/* Publisher Data */
+
+insert into publisher
+values (1,'Mustafa','Saad','Sobeih','mostafasobih54969@gmail.com',01015921236);
+
+insert into publisher
+values (2,'Ammar','Yasser','Farouk','ammaryasserqwetyu@gmail.com',01092451993);
+
+insert into publisher
+values (3,'Mahfouz','Sherif','Mousa','mahfouzsherif04@gmail.com',01007751226);
+
+insert into publisher
+values (4,'Mariam','Salah','Salem','Mariamsalah478@gmail.com',01153221337);
+
+insert into publisher
+values (5,'Farah','Hussien','Mohamed','Farahhussein353@gmail.com',01065452619);
+
+insert into publisher
+values (6,'Rawan','Emad','AbdelAziz','rawanenadabdelaziz@gmail.com',01144144283);
+
+insert into publisher
+values (7,'Rima','Osama','AbdelFattah','rima.osama75@gmail.com',01066715852);
+
+/******************************************/
+
+create table Magazine(
+Magazine_ID number(2) ,
+Title varchar2(25) ,
+price number(3) CHECK( price > 0) ,
+Magazine_Category varchar2(25) ,
+Publisher_ID number(2) ,
+publish_date DATE ,
+CONSTRAINT publisher_Magazine_fk FOREIGN KEY (Publisher_ID) 
+REFERENCES Publisher (publisher_ID) ,
+CONSTRAINT magazine_id_pk PRIMARY key(Magazine_ID) ,
+CONSTRAINT magazine_title_uq UNIQUE(Title) 
+);
+
+/*Magazine Data*/
+
+insert into magazine 
+values (1,'Shoot',30,'sport',2,'17-SEP-20');
+
+insert into magazine 
+values (2,'Golf',40,'sport',5,'17-AUG-21');
+
+insert into magazine 
+values (3,'Support',30,'economic',5,'18-MAY-19');
+
+insert into magazine 
+values (4,'Business',50,'economic',6,'15-NOV-16');
+
+insert into magazine 
+values (5,'Jocu',60,'Political',1,'24-MAR-15');
+
+/* updata in Data */ 
+
+update Magazine
+set publisher_id =4
+where magazine_id=3;
+
+/*************************************/
+ 
+create table Store(
+Store_ID number(2) ,
+Name varchar2(25) not null ,
+Stock NUMBER(3) not null,
+Store_Phone number(11) ,
+CONSTRAINT store_id_pk PRIMARY KEY (Store_ID) ,
+CONSTRAINT store_phone_uq UNIQUE (Store_Phone) 
+);
+ 
+ /* Store Data*/
+
+insert into Store
+values(1,'Light',30,0244613684);
+
+insert into Store
+values(2,'Social Store',50,0255419284);
+
+insert into Store
+values(3,'venus',20,0274512696);
+
+insert into Store
+values(4,'Zone202',90,0284754730);
+
+insert into Store
+values(5,'NaRa',70,0297110354);
+
+insert into Store
+values(6, 'Sub Zero', 0, 0255419224);
+
+/********************************/
+
+create table Article(
+Article_ID NUMBER(2),
+Header VARCHAR2(100) NOT NULL,
+Article_Content varchar2(2000)  ,
+Magazine_ID NUMBER(2) ,
+CONSTRAINT article_id_pk PRIMARY key (Article_ID) ,
+CONSTRAINT article_header_uq UNIQUE(Header) ,
+CONSTRAINT Magazine_Article_fk FOREIGN key(Magazine_ID)
+REFERENCES Magazine( Magazine_ID) 
+);
+
+/* Article Data */ 
+insert into article 
+values (1,Null,Null,3);
+
+insert into article 
+values (2,'Descriptive Header',Null,2);
+
+insert into article 
+values (3,'Narrative Header',Null,4);
+
+insert into article 
+values (4,'Persuasive Header',Null,1);
+
+insert into article 
+values (5,'Objective Header',Null,5);
+
+/**********************************/
+
+create table Writer(
+Writer_ID NUMBER(2) ,
+FirstName VARCHAR2(25) NOT NULL,
+MiddleName VARCHAR2(25) NOT NULL,
+LastName VARCHAR2(25) NOT NULL,
+Email VARCHAR2(40) ,
+Phone number(11) ,
+CONSTRAINT writer_id_pk PRIMARY KEY (Writer_ID) ,
+CONSTRAINT writer_email_uq UNIQUE (Email) ,
+CONSTRAINT writer_phone_uq UNIQUE (Phone) 
+);
+
+/* Writer Data*/
+
+insert into writer
+values(1,'Mahmoud','Ahmed','Sayed','mos54@gmail.com',01100289929);
+
+insert into writer
+values(2,'Amr','Mohamed','Saed','ams04@gmail.com',01040299289);
+
+insert into writer
+values(3,'Amira','Sayed','Ahmed','asa40@gmail.com',01550786929);
+
+insert into writer
+values(4,'Nader','Hussien','Galal','nhg10@gmail.com',01154287939);
+
+insert into writer
+values(5,'Ibrahim','Asaad','Saad','ias35@gmail.com',01010063799);
+
+/********************************/
+
+create table Reader(
+Reader_ID NUMBER(2) ,
+FirstName VARCHAR2(25) NOT NULL,
+MiddleName VARCHAR2(25) NOT NULL,
+LastName VARCHAR2(25) NOT NULL,
+Email VARCHAR2(40) ,
+Phone number(11) ,
+CONSTRAINT reader_id_pk PRIMARY KEY (Reader_ID) ,
+CONSTRAINT reader_emaai_uq UNIQUE (Email) ,
+CONSTRAINT reader_phone_uq UNIQUE (Phone) 
+);
+
+/*Reader Data*/
+
+insert into Reader
+values(1,'Hamza','Usama','Allam','hua95@gmail.com',01223174139);
+
+insert into Reader
+values(2,'Asmaa','Mustafa','Samir','ams96@gmail.com',01145962844);
+
+insert into reader
+values(3,'Amir','Qasem','Sayed','aqs102@gmail.com',01108595639);
+
+insert into reader
+values(4,'Jana','Ashraf','Montasser','jam789@gmail.com',01015921239);
+
+insert into reader
+values(5,'Manar','Mustafa','Khaled','mmk4041@gmail.com',01225878964);
+
+/*************************************/
+
+create table Written_By(
+Writer_ID NUMBER(2) ,
+Article_ID NUMBER(2) ,
+Written_Date DATE NOT NULL ,
+CONSTRAINT Writer_Written_By_fk FOREIGN KEY (Writer_ID)
+REFERENCES Writer (Writer_ID) ,
+CONSTRAINT Article_Written_By_fk FOREIGN KEY (Article_ID)
+REFERENCES Article(Article_ID)
+);
+
+/* Written_by Data */
+
+insert into written_by
+values(1,2,'28-SEP-15');
+
+insert into written_by
+values(2,3,'07-DEC-12');
+
+insert into written_by
+values(3,4,'21-MAY-17');
+
+insert into written_by
+values(4,5,'18-MAY-13');
+
+
+insert into written_by
+values(5,1,'06-FEB-18');
+
+/***************************/
+
+create table Has(
+Magazine_ID NUMBER(2) ,
+Store_ID NUMBER(2) ,
+CONSTRAINT Magazine_Has_fk FOREIGN KEY (Magazine_ID)
+REFERENCES Magazine (Magazine_ID) ,
+CONSTRAINT Store_Has_fk FOREIGN KEY (Store_ID)
+REFERENCES Store (Store_ID)
+);
+
+/*Has Data*/
+
+insert into Has 
+values (2,1);
+
+insert into Has 
+values (3,2);
+
+insert into Has 
+values (1,3);
+
+insert into Has 
+values (4,4);
+
+insert into Has 
+values (5,5);
+
+/************************/
+
+create table Buys(
+SoldQuantity NUMBER(4) ,
+Reader_ID NUMBER(2) ,
+Store_ID NUMBER(6) ,
+CONSTRAINT Reader_Buys_fk FOREIGN key (Reader_ID)
+REFERENCES Reader (Reader_ID) ,
+CONSTRAINT Store_Buys_fk FOREIGN key (Store_ID)
+references Store (Store_ID) 
+);
+
+/********************************/
+
+insert into buys
+values (3,3,4);
+
+
+insert into buys
+values (4,2,1);
+
+insert into buys
+values (1,4,3);
+
+insert into buys
+values (5,1,5);
+
+insert into buys
+values (2,5,2);
+
+/****************************/
+
+create table Store_Location(
+Location varchar2(25),
+Store_ID NUMBER (2) ,
+CONSTRAINT store_Location_pk PRIMARY key(Location) ,
+CONSTRAINT Store_Store_Location_fk FOREIGN key (Store_ID) 
+references Store(Store_ID) 
+);
+
+/* Store_Location Data */
+
+insert into store_location
+values('1st Ahmed Orabi,Cairo',3);
+
+insert into store_location
+values('Abbasia,Cairo',2);
+
+insert into store_location
+values('Nasr City,Cairo',5);
+
+insert into store_location
+values('Dokki,Giza',4);
+
+insert into store_location
+values('Shobra,Qalubya',1);
+
+insert into store_location
+values('Alf Maskan,Cairo',6);
+
+/***************************************/
+
+
